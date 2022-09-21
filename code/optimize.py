@@ -1,14 +1,13 @@
-from generate_data import sample_config, Cat_hp, Num_hp
 import csv
-from re import search
-import joblib
-import numpy as np
-from trial import Trial
-from sklearn.model_selection import train_test_split
-from joblib import dump, load
+
 import click
+import numpy as np
+from generate_data import Cat_hp, Num_hp, sample_config
+from joblib import dump, load
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.utils import to_categorical
+from trial import Trial
 
 """
 WARNING SUBOPTIMAL SCRIPT: saves all trials and compares their predicted performance at the end.
@@ -16,21 +15,15 @@ HAS TO BE CHANGED TO: do generate a trial, partially train it, compare with the 
 """
 
 
-def train_n_confs(
-    n_samples: int, train_ratio: float, search_space: dict, max_epochs: int, X, y
-):
+def train_n_confs(n_samples: int, train_ratio: float, search_space: dict, max_epochs: int, X, y):
     trials = []
     accs = []
     losses = []
     for _ in range(n_samples):
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=(1 - train_ratio)
-        )
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=(1 - train_ratio))
         config = sample_config(search_space)
         print(config)
-        trial = Trial(
-            config, X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test
-        )
+        trial = Trial(config, X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test)
         loss, acc = [], []
         trial.run_n_epochs(max_epochs)
         trials.append(trial)
@@ -61,9 +54,7 @@ def gen_x(config, curve):
 
 def load_dataset():
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
-    X = (
-        np.concatenate([X_train, X_test]).astype("float32") / 255.0
-    )  # normalize to 0-1 range
+    X = np.concatenate([X_train, X_test]).astype("float32") / 255.0  # normalize to 0-1 range
     y = to_categorical(np.concatenate([y_train, y_test]))
     return X, y
 
@@ -89,9 +80,7 @@ def load_dataset():
     default="scaler.joblib",
     help="Joblib file storing the X scaler used when trained the model",
 )
-@click.option(
-    "--top_k", default=10, help="Number of configurations that will be fully trained"
-)
+@click.option("--top_k", default=10, help="Number of configurations that will be fully trained")
 @click.option(
     "--n_samples",
     default=100,

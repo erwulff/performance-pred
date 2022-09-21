@@ -1,4 +1,4 @@
-from ray.tune import choice, uniform, quniform, loguniform, randint, qrandint
+from ray.tune import choice, loguniform, qrandint, quniform, randint, uniform
 
 
 def generate_hyperparameters(**kwargs):
@@ -33,12 +33,12 @@ def generate_hyperparameters(**kwargs):
 """
 #For simple mnist nn
 def generate_hyperparameters(**kwargs):
-	return {
-		"filters": random.choice([8, 16, 32, 64, 128]),
-		"strides": random.choice([2, 3, 5]),
-		"max_pool": random.choice([2, 3, 5]),
-		"1st_dense": random.choice([20, 40, 60, 80, 100, 120, 140, 160, 180, 200]),
-		"lr": np.exp(random.uniform(np.log(1e-5),np.log(0.1))),
-		"momentum": random.uniform(0,1)
-	}
+    return {
+        "filters": random.choice([8, 16, 32, 64, 128]),
+        "strides": random.choice([2, 3, 5]),
+        "max_pool": random.choice([2, 3, 5]),
+        "1st_dense": random.choice([20, 40, 60, 80, 100, 120, 140, 160, 180, 200]),
+        "lr": np.exp(random.uniform(np.log(1e-5),np.log(0.1))),
+        "momentum": random.uniform(0,1)
+    }
 """

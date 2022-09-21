@@ -1,8 +1,5 @@
+from tensorflow.keras.layers import Conv2D, Dense, Flatten, MaxPooling2D
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Conv2D
-from tensorflow.keras.layers import MaxPooling2D
-from tensorflow.keras.layers import Dense
-from tensorflow.keras.layers import Flatten
 from tensorflow.keras.optimizers import SGD
 
 
@@ -36,16 +33,12 @@ class Trial:
         )
         self.model.add(MaxPooling2D((hps["max_pool"], hps["max_pool"])))
         self.model.add(Flatten())
-        self.model.add(
-            Dense(hps["1st_dense"], activation="relu", kernel_initializer="he_uniform")
-        )
+        self.model.add(Dense(hps["1st_dense"], activation="relu", kernel_initializer="he_uniform"))
         self.model.add(Dense(10, activation="softmax"))
 
         # compile model
         opt = SGD(learning_rate=hps["lr"], momentum=hps["momentum"])
-        self.model.compile(
-            optimizer=opt, loss="categorical_crossentropy", metrics=["accuracy"]
-        )
+        self.model.compile(optimizer=opt, loss="categorical_crossentropy", metrics=["accuracy"])
 
     def run_n_epochs(self, n: int):
         for _ in range(n):  # done this way to be able to store the learning curve

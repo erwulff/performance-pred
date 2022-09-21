@@ -3,12 +3,10 @@ Following the example from Ray Core that can be found here:
 https://docs.ray.io/en/latest/ray-core/examples/plot_hyperparameter.html
 """
 
-from math import inf
-import random
-import os
 import csv
-import click
+from math import inf
 
+import click
 import ray
 
 # ray.init(address="auto")
@@ -34,7 +32,7 @@ def partial_train(config, n_epochs):
 # not used in current version
 @ray.remote
 def finish_training(trial, n_epochs):
-	return
+    return
 """
 
 
@@ -64,9 +62,7 @@ def finish_training(trial, n_epochs):
     default="y_scaler.joblib",
     help="Joblib file storing the y scaler used when trained the model",
 )
-@click.option(
-    "--top_k", default=10, help="Number of configurations that will be fully trained"
-)
+@click.option("--top_k", default=10, help="Number of configurations that will be fully trained")
 @click.option(
     "--n_samples",
     default=100,
@@ -95,16 +91,16 @@ def main(
 ):
     print(
         """	Starting run with:
-        	known_epochs: {}
-        	total_epochs: {}
-        	model_file: {}
-			x_scaler_file: {}
-			y_scaler_file: {}
-			top_k: {}
-			n_samples: {}
-			presults_file: {}
-			fresults_file: {}
-      	""".format(
+            known_epochs: {}
+            total_epochs: {}
+            model_file: {}
+            x_scaler_file: {}
+            y_scaler_file: {}
+            top_k: {}
+            n_samples: {}
+            presults_file: {}
+            fresults_file: {}
+          """.format(
             known_epochs,
             total_epochs,
             model_file,
@@ -118,9 +114,7 @@ def main(
     )
 
     # instantiate the performance predictor
-    predictor = Predictor(
-        svr=model_file, x_scaler=x_scaler_file, y_scaler=y_scaler_file
-    )
+    predictor = Predictor(svr=model_file, x_scaler=x_scaler_file, y_scaler=y_scaler_file)
 
     # Keep track of the best hyperparameters and the best predicted loss.
     best_trials = [None] * top_k

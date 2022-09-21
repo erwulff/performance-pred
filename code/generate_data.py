@@ -1,21 +1,20 @@
 import csv
 import random
-import numpy as np
-from trace import Trace
 from os.path import exists
-from trial import Trial
+from trace import Trace
+
+import click
+import numpy as np
+from sklearn.model_selection import train_test_split
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.utils import to_categorical
-from sklearn.model_selection import train_test_split
-import click
+from trial import Trial
 
 
 # load train and test dataset
 def load_dataset():
     (X_train, y_train), (X_test, y_test) = mnist.load_data()
-    X = (
-        np.concatenate([X_train, X_test]).astype("float32") / 255.0
-    )  # normalize to 0-1 range
+    X = np.concatenate([X_train, X_test]).astype("float32") / 255.0  # normalize to 0-1 range
     y = to_categorical(np.concatenate([y_train, y_test]))
     return X, y
 
@@ -94,14 +93,10 @@ def main(n_samples: int, max_epochs: int, filename: str, train_ratio: float):
     X, y = load_dataset()
 
     for _ in range(n_samples):
-        X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=(1 - train_ratio)
-        )
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=(1 - train_ratio))
         config = sample_config(search_space)
         print(config)
-        trial = Trial(
-            config, X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test
-        )
+        trial = Trial(config, X_train=X_train, X_test=X_test, y_train=y_train, y_test=y_test)
         trial.run_n_epochs(max_epochs)
         line = list(trial.config.values())
         line.extend(trial.acc)

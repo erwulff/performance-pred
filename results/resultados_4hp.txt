@@ -1,6 +1,6 @@
 all_4hp_rusty.csv
     - take 300 first samples (minimum number of samples used on the paper)
-    
+
     - 0.0 learning curve
         - 0 random_state for train/test split (20%train 80%test)
         - MSE: 0.00790473440748679
@@ -33,7 +33,7 @@ all_4hp_rusty.csv
         - hp optimization: r2: 0.8354424691397406, C= 9.678520478585682, Nu = 0.17166282360566942
         - final test r2: 0.9902491879059602
         - final test mse: 0.00010614186071653187
-    
+
     - 0.5 learning curve
         - 0 random_state for train/test split (20%train 80%test)
         - MSE: 1.5223455257597555e-05
@@ -44,7 +44,7 @@ all_4hp_rusty.csv
         - hp optimization: r2: 0.8933045937639585, C= 8.499892478498854, Nu = 0.28205732994586175
         - final test r2: 0.9981281161265539
         - final test mse: 2.0376275889295854e-05
-    
+
     - 0.75 learning curve
         - 0 random_state for train/test split (20%train 80%test)
         - MSE: 4.8890106447173946e-05
@@ -55,7 +55,7 @@ all_4hp_rusty.csv
         - hp optimization: r2: 0.8964502959864806, C= 5.361944474515723, Nu = 0.06693339671994336
         - final test r2: 0.9948304924468403
         - final test mse: 5.627235407560785e-05
-    
+
     - 0.95 learning curve
         - 0 random_state for train/test split (20%train 80%test)
         - MSE: 4.4810691707176223e-05

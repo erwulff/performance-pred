@@ -2,9 +2,9 @@
 code from: https://docs.ray.io/en/latest/cluster/quickstart.html
 """
 
-from collections import Counter
 import socket
 import time
+from collections import Counter
 
 import ray
 

@@ -1,6 +1,5 @@
-from gettext import npgettext
-from joblib import load, dump
 import numpy as np
+from joblib import load
 
 
 class Predictor:
@@ -14,9 +13,7 @@ class Predictor:
         # return curve[-1] #like this for debugging
         difs1, difs2 = self.__finite_difs(np.array(curve))
         X = np.append(
-            np.append(
-                np.append(np.array(list(config.values())), np.array(curve)), difs1
-            ),
+            np.append(np.append(np.array(list(config.values())), np.array(curve)), difs1),
             difs2,
         ).reshape(1, -1)
         X = self.x_scaler.transform(X)

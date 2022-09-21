@@ -21,7 +21,7 @@ echo "################# End of job submission script. #########################"
 #nvidia-smi
 module load gcc
 
-source ~/venvs/venv1/bin/activate 
+source ~/venvs/venv1/bin/activate
 python --version
 
 
@@ -35,7 +35,7 @@ echo "Redis password: ${redis_password}"
 nodes=$(scontrol show hostnames $SLURM_JOB_NODELIST) # Getting the node names
 nodes_array=( $nodes )
 
-node_1=${nodes_array[0]} 
+node_1=${nodes_array[0]}
 ip=$(srun --nodes=1 --ntasks=1 -w "$node_1" hostname --ip-address) # making redis-address
 port=6379
 ip_head=$ip:$port

@@ -1,13 +1,14 @@
 from mlpf_trial import Trial
 
+
 def remote_fun(config, n_epochs, **kwargs):
-	#should be rewritten without using Trial 
-	trial = Trial(config,config_file_path = '../parameters/delphes.yaml')
-	trial.run_n_epochs(n_epochs)
-	return trial.loss
+    # should be rewritten without using Trial
+    trial = Trial(config, config_file_path="../parameters/delphes.yaml")
+    trial.run_n_epochs(n_epochs)
+    return trial.loss
 
 
-'''
+"""
 # Example for mnist were we need aux functions for the remote_fun
 # MUST IMPORT A DIFFERENT TRIAL!!!!
 from tensorflow.keras.datasets import mnist
@@ -33,4 +34,4 @@ def get_data_loaders(train_ratio = 0.8, random_state = 42):
 def remote_fun(config, n_epochs, **kwargs):
 	train, test = get_data_loaders()
 	trial = Trial(config, X_train=train['X'], X_test=test['X'], y_train=train['y'], y_test=test['y'])
-'''
+"""

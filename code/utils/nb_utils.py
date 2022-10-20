@@ -1,6 +1,8 @@
 import random
+from pathlib import Path
 
 import numpy as np
+import pandas as pd
 from joblib import dump
 from sklearn.model_selection import train_test_split
 
@@ -43,6 +45,12 @@ def get_df_info(data_name):
         df_info["min_hp_idx"] = 0
         df_info["max_hp_idx"] = 6
         df_info["min_curve_idx"] = 7
+    elif data_name == "cifar":
+        df_info["df_path"] = "../data/cifar/cifar_curves_mod.json"
+        df_info["num_epochs"] = 200
+        df_info["min_hp_idx"] = 0
+        df_info["max_hp_idx"] = 4
+        df_info["min_curve_idx"] = 5
 
     return df_info
 
@@ -83,6 +91,28 @@ def get_curve(df_info, known_curve, df):
 def get_target(df_info, df):
     target = df[df.columns[df_info["min_curve_idx"] + df_info["num_epochs"] - 2]].to_numpy()
     return target
+
+
+def get_features_and_target(name, known_curve, use_hps, epoch_separator):
+    df_info = get_df_info(name)
+    df_path = df_info["df_path"]
+    if Path(df_path).suffix == ".json":
+        df = pd.read_json(df_path)
+    elif Path(df_path).suffix == ".csv":
+        df = pd.read_csv(df_path)
+
+    curve = get_curve(df_info=df_info, known_curve=known_curve, df=df)
+
+    # Use only Downsampled learning curve without hps
+    X = curve[:, [i for i in range(0, curve.shape[1], epoch_separator)]]
+
+    if use_hps:
+        hps = df[df.columns[df_info["min_hp_idx"] : df_info["max_hp_idx"] + 1]].to_numpy()
+        X = np.append(hps, X, 1)
+
+    y = get_target(df_info, df)
+
+    return X, y
 
 
 # allows to exit jupyter notebook cell on a 'clean way'
